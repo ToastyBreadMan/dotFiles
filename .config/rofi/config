@@ -1,0 +1,13 @@
+rofi.modi: ssh,window,drun,run
+rofi.opacity: 85
+rofi.font: Roboto 14
+rofi.color-normal: #404552, #b8f3ff, #404552, #404552, #fe5f00
+rofi.color-window: argb:c82d303b, #7c8389, #1d1f21
+!rofi.color-window #404552 #404552 #404552
+rofi.width: 50
+rofi.lines: 5
+rofi.bw: 0
+rofi.location: 2
+rofi.eh: 1
+!rofi.separator-style: solid
+rofi.hide-scrollbar: true
