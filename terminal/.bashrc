@@ -1,16 +1,18 @@
 # Bashrc stufffs
 PROMPT_COMMAND=__prompt_command
+export CLICOLOR=1
 
 # Color Definitions
-MAGENTA="\e[0;35m"
-RED="\e[0;31m"
-RESET="\e[m"
+RED="\[\e[0;35m\]"
+MAGENTA="\[\e[0;31m\]"
+RESET="\[\e[m\]"
 
 # Alias
-alias ls='ls -G'
+#alias ls='ls --color=always'
+#alias grep='grep --color=auto'
 
 # Add Mac path
-export PATH=/usr/local/bin:$PATH
+export PATH=$PATH:$HOME/bin
 if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
 
 # Prompt command
