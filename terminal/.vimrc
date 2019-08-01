@@ -1,15 +1,52 @@
 syntax on
+
+if &compatible
+	set nocompatible
+endif
+
+" Colorscheme
 let g:dracula_colorterm = 0
-set cursorline
 color dracula
 
+" QOL stuffs
+set cursorline
+set backspace=indent,eol,start
+set ruler
+
+" Move temp files to safe directory to protect against CVE-2017-1000382
+" Essentially .swp files can be global readable, so make them safe
+let vimhome=$HOME . "/.vim"
+let &g:directory=vimhome . "/swap//"
+let &g:backupdir=vimhome."/backup//"
+let &g:undodir=vimhome."/undo//"
+
+" if the directories don't exist, create them
+if ! isdirectory(expand(&g:directory))
+	call mkdir(expand(&g:directory), "p", 0700)
+endif
+
+if ! isdirectory(expand(&g:backupdir))
+	call mkdir(expand(&g:backupdir), "p", 0700)
+endif
+
+if ! isdirectory(expand(&g:undodir))
+	call mkdir(expand(&g:undodir), "p", 0700)
+endif
+
+set backup
+set undofile
+
+" Tabs
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set showcmd
-set nocompatible
 set smartindent
+set showcmd
 
+" Scroll settings
+set scrolloff=5
+
+" Mapleader
 let mapleader = ","
 
 " Split remaps
