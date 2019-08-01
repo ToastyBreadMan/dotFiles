@@ -27,16 +27,6 @@ set showcmd                                 " Show last command
 set ruler                                   " Show ruler at bottom
 
 " |----------------|
-" | Plugin Install |
-" |----------------|
-
-" Put plug specific options here
-function Plug_setup()
-	let g:dracula_colorterm = 0
-	color dracula
-endfunction
-
-" |----------------|
 " | File Managment |
 " |----------------|
 
@@ -44,8 +34,8 @@ endfunction
 " Essentially .swp files can be global readable, so make them safe
 let vimhome=$HOME . "/.vim"
 let &g:directory=vimhome . "/swap//"
-let &g:backupdir=vimhome."/backup//"
-let &g:undodir=vimhome."/undo//"
+let &g:backupdir=vimhome . "/backup//"
+let &g:undodir=vimhome . "/undo//"
 
 " if the directories don't exist, create them
 if ! isdirectory(expand(&g:directory))
@@ -64,6 +54,44 @@ set backup
 set undofile
 set undolevels=1000
 set undoreload=10000
+
+" |----------------|
+" | Plugin Install |
+" |----------------|
+
+" Put plug specific options here
+let plug_dir=$HOME . "/.vim/pack/plugins/"
+let plug_start=plug_dir . "start/"
+let plug_opt=plug_dir . "opt/"
+
+function Plug_Setup()
+	if executable("git") == -1
+		echom "git is needed for plugins to be installed"
+		return
+	endif
+
+	if ! isdirectory(expand(plug_start))
+		call mkdir(expand(plug_start), "p", 0755)
+	endif
+
+	if ! isdirectory(expand(plug_opt))
+		call mkdir(expand(plug_opt), "p", 0755)
+	endif
+
+	if ! isdirectory(expand(plug_start . "dracula-theme"))
+		execute "!git clone https://github.com/dracula/vim.git " . plug_start . "dracula-theme"
+	endif
+
+	packadd dracula-theme
+	colorscheme dracula
+
+endfunction
+
+call Plug_Setup()
+
+"let g:dracula_colorterm = 0
+"color dracula
+
 
 " |---------|
 " | Rebinds |
