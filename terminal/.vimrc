@@ -1,17 +1,38 @@
-syntax on
+" |------------------------|
+" | Configuration Settings |
+" |------------------------|
+syntax on									" Gimme Colors
+set nocompatible							" Use vim
 
-if &compatible
-	set nocompatible
-endif
+set encoding=utf-8                          " use utf8
+set fileencoding=utf-8                      " use utf8
+set termencoding=utf-8                      " use utf8
+
+set tabstop=4                               " Set tab to 4 spaces
+set softtabstop=4                           " Soft tabs are good
+set shiftwidth=4                            " 
+set smartindent                             " Indent well
+
+set scrolloff=5                             " Keep 5 lines above cursor
+set sidescrolloff=5                         " Keep 5 characters after cursor
+
+set cursorline                              " Show cursorline
+set backspace=indent,eol,start              " Delete newlines
+set incsearch hlsearch                      " Highlight searches
+
+set splitbelow                              " Split below
+set splitright                              " Split right
+
+set showcmd                                 " SHow last command
+set ruler                                   " Show ruler at bottom
 
 " Colorscheme
 let g:dracula_colorterm = 0
 color dracula
 
-" QOL stuffs
-set cursorline
-set backspace=indent,eol,start
-set ruler
+" |----------------|
+" | File Managment |
+" |----------------|
 
 " Move temp files to safe directory to protect against CVE-2017-1000382
 " Essentially .swp files can be global readable, so make them safe
@@ -35,16 +56,12 @@ endif
 
 set backup
 set undofile
+set undolevels=1000
+set undoreload=10000
 
-" Tabs
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set smartindent
-set showcmd
-
-" Scroll settings
-set scrolloff=5
+" |---------|
+" | Rebinds |
+" |---------|
 
 " Mapleader
 let mapleader = ","
@@ -84,6 +101,3 @@ inoremap <esc> <nop>
 " Abbreviations 
 iabbrev todo TODO:
 iabbrev fixme FIXME:
-
-set splitbelow
-set splitright
