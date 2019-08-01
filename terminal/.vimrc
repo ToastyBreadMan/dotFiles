@@ -23,12 +23,18 @@ set incsearch hlsearch                      " Highlight searches
 set splitbelow                              " Split below
 set splitright                              " Split right
 
-set showcmd                                 " SHow last command
+set showcmd                                 " Show last command
 set ruler                                   " Show ruler at bottom
 
-" Colorscheme
-let g:dracula_colorterm = 0
-color dracula
+" |----------------|
+" | Plugin Install |
+" |----------------|
+
+" Put plug specific options here
+function Plug_setup()
+	let g:dracula_colorterm = 0
+	color dracula
+endfunction
 
 " |----------------|
 " | File Managment |
