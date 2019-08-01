@@ -25,6 +25,7 @@ set splitright                              " Split right
 
 set showcmd                                 " Show last command
 set ruler                                   " Show ruler at bottom
+let s:hidden_all = 0
 
 " |----------------|
 " | File Managment |
@@ -59,17 +60,22 @@ set undoreload=10000
 " | Plugin Install |
 " |----------------|
 
-" Put plug specific options here
-let plug_dir=$HOME . "/.vim/pack/plugins/"
-let plug_start=plug_dir . "start/"
-let plug_opt=plug_dir . "opt/"
+" Run 'call Plug_Setup' to install plugins
 
 function Plug_Setup()
+
+	" Plugin directories
+	let plug_dir=$HOME . "/.vim/pack/plugins/"
+	let plug_start=plug_dir . "start/"
+	let plug_opt=plug_dir . "opt/"
+
+	" Check if git is installed
 	if executable("git") == -1
 		echom "git is needed for plugins to be installed"
 		return
 	endif
 
+	" Set up directory structures
 	if ! isdirectory(expand(plug_start))
 		call mkdir(expand(plug_start), "p", 0755)
 	endif
@@ -78,19 +84,67 @@ function Plug_Setup()
 		call mkdir(expand(plug_opt), "p", 0755)
 	endif
 
+	" |=========|
+	" | Dracula |
+	" |=========|
+
 	if ! isdirectory(expand(plug_start . "dracula-theme"))
-		execute "!git clone https://github.com/dracula/vim.git " . plug_start . "dracula-theme"
+		execute "!git clone https://github.com/dracula/vim.git" . " " . plug_start . "dracula-theme"
 	endif
 
-	packadd dracula-theme
-	colorscheme dracula
+	" |===========|
+	" | Syntastic |
+	" |===========|
+
+	if ! isdirectory(expand(plug_start . "syntastic"))
+		execute "!git clone https://github.com/vim-syntastic/syntastic.git" . " " . plug_start . "syntastic"
+	endif
 
 endfunction
 
-call Plug_Setup()
+" Dracula settings
+try
+	packadd dracula-theme
+	let g:dracula_colorterm = 0
+	let g:dracula_italic = 0
+	colorscheme dracula
+catch
+endtry
 
-"let g:dracula_colorterm = 0
-"color dracula
+" Syntastic settings
+try
+	packadd syntastic
+	set statusline+=%#warningmsg#
+	set statusline+=%{SyntasticStatuslineFlag()}
+	set statusline+=%*
+
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_auto_loc_list = 1
+	let g:syntastic_check_on_open = 0
+	let g:syntastic_check_on_wq = 0
+catch
+endtry
+
+
+" |-----------|
+" | Functions |
+" |-----------|
+
+function! ToggleHiddenAll()
+	if s:hidden_all  == 0
+		let s:hidden_all = 1
+		set noshowmode
+		set noruler
+		set laststatus=0
+		set noshowcmd
+	else
+		let s:hidden_all = 0
+		set showmode
+		set ruler
+		set laststatus=2
+		set showcmd
+	endif
+endfunction
 
 
 " |---------|
@@ -132,6 +186,12 @@ inoremap <esc> <nop>
 "nnoremap <left> <nop>
 "nnoremap <right> <nop>
 
-" Abbreviations 
+" Function calls
+nnoremap <S-h> :call ToggleHiddenAll()<CR>
+
+" |---------------|
+" | Abbreviations |
+" |---------------|
+
 iabbrev todo TODO:
 iabbrev fixme FIXME:
