@@ -154,6 +154,13 @@ endfunction
 " Mapleader
 let mapleader = ","
 
+" Use arrow keys in insert mode
+" Yes I know this is heresy
+inoremap <esc>0A <esc>ki
+inoremap <esc>0B <esc>ji
+inoremap <esc>0C <esc>li
+inoremap <esc>0D <esc>hi
+
 " Split remaps
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
