@@ -1,5 +1,5 @@
-# Dotfiles for easy trashtop setup
-Various setup stuff so test laptop setup goes faster
+# Dotfiles for easy terminal
+Moving from machine to machine (or VM) sucks, these make my life easier
 
 ## xterm-256color.terminfo.txt
 The file is so iTerm2 can understand how Italic text works  
@@ -15,7 +15,12 @@ Run `tic -x tmux-256color.terminfo` to get tmux to read the TERMINFO file correc
 ## Vim
 Vim file in progress that has options to install plugins from the command line
 
-Run `:call Plug_Setup()` to install the _Dracula_ colorscheme (my favorite) and Syntastic
+Vim 8 has it's own plugin manager that works well and allows for optional packages you can activate
+if you need
+
+I will probably never stop messing with my vimrc, so use at your own risk
+
+Run `:call Plug_Install()` to install the _Dracula_ colorscheme (my favorite) and _Syntastic_
 
 ## Zsh
 Work in progress zsh

@@ -13,8 +13,10 @@ set softtabstop=4                           " Soft tabs are good
 set shiftwidth=4                            " 
 set smartindent                             " Indent well
 
+set nowrap									" Don't wrap lines
 set scrolloff=5                             " Keep 5 lines above cursor
 set sidescrolloff=5                         " Keep 5 characters after cursor
+set sidescroll=1							" Scroll one character at a time
 
 set cursorline                              " Show cursorline
 set backspace=indent,eol,start              " Delete newlines
@@ -62,7 +64,7 @@ set undoreload=10000
 
 " Run 'call Plug_Setup' to install plugins
 
-function Plug_Setup()
+function Plug_Install()
 
 	" Plugin directories
 	let plug_dir=$HOME . "/.vim/pack/plugins/"
@@ -102,9 +104,12 @@ function Plug_Setup()
 
 endfunction
 
+" Load all packages in the 'start' package directory
+" 'opt' packages must be loaded with 'packadd!'
+packloadall!
+
 " Dracula settings
 try
-	packadd dracula-theme
 	let g:dracula_colorterm = 0
 	let g:dracula_italic = 0
 	colorscheme dracula
@@ -113,7 +118,6 @@ endtry
 
 " Syntastic settings
 try
-	packadd syntastic
 	set statusline+=%#warningmsg#
 	set statusline+=%{SyntasticStatuslineFlag()}
 	set statusline+=%*
