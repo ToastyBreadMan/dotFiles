@@ -13,7 +13,7 @@ set softtabstop=4                           " Soft tabs are good
 set shiftwidth=4                            " 
 set smartindent                             " Indent well
 
-set nowrap									" Don't wrap lines
+set nowrap
 set scrolloff=5                             " Keep 5 lines above cursor
 set sidescrolloff=5                         " Keep 5 characters after cursor
 set sidescroll=1							" Scroll one character at a time
