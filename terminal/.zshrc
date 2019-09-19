@@ -1,3 +1,5 @@
+# zsh config
+
 ## Options section
 setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
 setopt nocaseglob                                               # Case insensitive globbing
