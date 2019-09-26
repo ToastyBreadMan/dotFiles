@@ -23,9 +23,27 @@ syncFile() {
 		fi
 	fi
 
+	printf "\tCreating symlink $1 -> $2\n\n"
+	ln -s $2 $1
 }
 
-syncFile ~/.vimrc ~/dotFiles/terminal/.vimrc
-syncFile ~/.bashrc ~/dotFiles/terminal/.bashrc
-syncFile ~/.tmux.conf ~/dotFiles/terminal/.tmux.conf
-syncFile ~/.zshrc ~/dotFiles/terminal/.zshrc
+printf "Do you want to copy or sync dotfiles? [C/S]"
+read resp
+
+if [ "$resp" = 'C' -o "$resp" = 'c' ]; then
+
+	cp -i ~/dotFiles/terminal/.vimrc ~/.vimrc
+	cp -i ~/dotFiles/terminal/.bashrc ~/.bashrc 
+	cp -i ~/dotFiles/terminal/.tmux.conf ~/.tmux.conf 
+	cp -i ~/dotFiles/terminal/.zshrc ~/.zshrc  
+	#cp -i ~/dotFiles/terminal/.Xresources ~/.Xresources
+
+elif [ "$resp" = 'S' -o "$resp" = 's']; then
+	
+	syncFile ~/.vimrc ~/dotFiles/terminal/.vimrc
+	syncFile ~/.bashrc ~/dotFiles/terminal/.bashrc
+	syncFile ~/.tmux.conf ~/dotFiles/terminal/.tmux.conf
+	syncFile ~/.zshrc ~/dotFiles/terminal/.zshrc
+	#syncFile ~/.Xresources ~/dotFiles/terminal/.Xresources 
+
+fi

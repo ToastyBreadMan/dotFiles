@@ -1,7 +1,13 @@
-# Bashrc stufffs
+#  _               _              
+# | |__   __ _ ___| |__  _ __ ___ 
+# | '_ \ / _` / __| '_ \| '__/ __|
+# | |_) | (_| \__ \ | | | | | (__ 
+# |_.__/ \__,_|___/_| |_|_|  \___|
+
 PROMPT_COMMAND=__prompt_command
 export CLICOLOR=1
 
+# Get what machine we are on
 unameOut="$(uname -s)"
 case "${unameOut}" in
 	Linux*)     machine=Linux;;
@@ -36,9 +42,15 @@ LCYAN="\[\e[96m\]"
 WHITE="\[\e[97m\]"
 RESET="\[\e[0m\]"
 
+# Environment variables
+EDITOR=vim
+VISUAL=vim
+PROMPT_VERBOSE=false
+
 # Aliases
 alias ll='ls -l'
 alias la='ls -la'
+alias cp='cp -i'
 alias pvim='vim -u NONE'
 alias grep='grep --color=auto'
 alias promptswap='if $PROMPT_VERBOSE; then PROMPT_VERBOSE=false; else PROMPT_VERBOSE=true; fi'
@@ -52,8 +64,6 @@ fi
 # Add Mac path
 export PATH=$PATH:$HOME/bin
 if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
-EDITOR=vim
-PROMPT_VERBOSE=false
 
 # Prompt command
 __prompt_command() {
