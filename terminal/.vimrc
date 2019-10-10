@@ -206,3 +206,13 @@ nnoremap <S-h> :call ToggleHiddenAll()<CR>
 
 iabbrev todo TODO:
 iabbrev fixme FIXME:
+
+" |---------------|
+" | Auto commands |
+" |---------------|
+
+augroup markdown
+	autocmd!
+	autocmd BufNewFile,BufRead *.md setlocal colorcolumn=80
+	autocmd BufNewFile,BufRead *.md setlocal spell
+augroup END

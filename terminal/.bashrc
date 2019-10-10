@@ -59,6 +59,9 @@ alias promptswap='if $PROMPT_VERBOSE; then PROMPT_VERBOSE=false; else PROMPT_VER
 if [ $machine == 'Linux' ]; then
 	alias ls='ls --color=always'
 #elif [ $machine == 'Mac' ]; then
+#	if [ -f "/usr/local/bin/vim" ]; then
+#		export PATH=$PATH:$HOME/bin
+#	fi
 fi
 
 # Add Mac path
