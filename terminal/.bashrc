@@ -51,7 +51,7 @@ PROMPT_VERBOSE=false
 alias ll='ls -l'
 alias la='ls -la'
 alias cp='cp -i'
-alias pvim='vim -u NONE'
+alias pvim='vim -n -i NONE'
 alias grep='grep --color=auto'
 alias promptswap='if $PROMPT_VERBOSE; then PROMPT_VERBOSE=false; else PROMPT_VERBOSE=true; fi'
 

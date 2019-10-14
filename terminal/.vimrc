@@ -53,7 +53,6 @@ if ! isdirectory(expand(&g:undodir))
 	call mkdir(expand(&g:undodir), "p", 0700)
 endif
 
-set backup
 set undofile
 set undolevels=1000
 set undoreload=10000
@@ -215,4 +214,5 @@ augroup markdown
 	autocmd!
 	autocmd BufNewFile,BufRead *.md setlocal colorcolumn=80
 	autocmd BufNewFile,BufRead *.md setlocal spell
+	autocmd BufNewFile,BufRead *.md setlocal commentstring=<!--\ %s\ -->
 augroup END
