@@ -18,34 +18,35 @@ case "${unameOut}" in
 esac
 
 # Character Types
-BOLD="\[\e[1m\]"
-DIM="\[\e[2m\]"
-UNDER="\[\e[4m\]"
-BLINK="\[\e[5m\]"
-REVERSE="\[\e[7m\]"
+RESET=$'\[\e[0m\]'
+BOLD=$'\[\e[1m\]'
+DIM=$'\[\e[2m\]'
+UNDER=$'\[\e[4m\]'
+BLINK=$'\[\e[5m\]'
+REVERSE=$'\[\e[7m\]'
 
 # Color Definitions
-RED="\[\e[31m\]"
-GREEN="\[\e[32m\]"
-YELLOW="\[\e[33m\]"
-BLUE="\[\e[34m\]"
-MAGENTA="\[\e[35m\]"
-CYAN="\[\e[36m\]"
-LGRAY="\[\e[37m\]"
-DGRAY="\[\e[90m\]"
-LRED="\[\e[91m\]"
-LGREEN="\[\e[92m\]"
-LYELLOW="\[\e[93m\]"
-LBLUE="\[\e[94m\]"
-LMAGENTA="\[\e[95m\]"
-LCYAN="\[\e[96m\]"
-WHITE="\[\e[97m\]"
-RESET="\[\e[0m\]"
+RED=$'\[\e[31m\]'
+GREEN=$'\[\e[32m\]'
+YELLOW=$'\[\e[33m\]'
+BLUE=$'\[\e[34m\]'
+MAGENTA=$'\[\e[35m\]'
+CYAN=$'\[\e[36m\]'
+LGRAY=$'\[\e[37m\]'
+DGRAY=$'\[\e[90m\]'
+LRED=$'\[\e[91m\]'
+LGREEN=$'\[\e[92m\]'
+LYELLOW=$'\[\e[93m\]'
+LBLUE=$'\[\e[94m\]'
+LMAGENTA=$'\[\e[95m\]'
+LCYAN=$'\[\e[96m\]'
+WHITE=$'\[\e[97m\]'
 
 # Environment variables
 EDITOR=vim
 VISUAL=vim
 PROMPT_VERBOSE=false
+umask 077
 
 # Aliases
 alias ll='ls -l'
