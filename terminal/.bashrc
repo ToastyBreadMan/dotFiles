@@ -43,9 +43,10 @@ LCYAN=$'\[\e[96m\]'
 WHITE=$'\[\e[97m\]'
 
 # Environment variables
-EDITOR=vim
-VISUAL=vim
-PROMPT_VERBOSE=false
+export EDITOR=vim
+export VISUAL=vim
+export PROMPT_VERBOSE=false
+export GREP_OPTIONS=' --color=auto'
 umask 077
 
 # Aliases
@@ -53,19 +54,19 @@ alias ll='ls -l'
 alias la='ls -la'
 alias cp='cp -i'
 alias pvim='vim -n -i NONE'
-alias grep='grep --color=auto'
 alias promptswap='if $PROMPT_VERBOSE; then PROMPT_VERBOSE=false; else PROMPT_VERBOSE=true; fi'
 
 # Machine specific aliases
 if [ $machine == 'Linux' ]; then
 	alias ls='ls --color=always'
+	alias open='xdg-open'
 #elif [ $machine == 'Mac' ]; then
 #	if [ -f "/usr/local/bin/vim" ]; then
 #		export PATH=$PATH:$HOME/bin
 #	fi
 fi
 
-# Add Mac path
+# Add home path
 export PATH=$PATH:$HOME/bin
 if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
 
