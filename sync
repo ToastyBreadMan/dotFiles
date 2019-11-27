@@ -38,12 +38,12 @@ if [ "$resp" = 'C' -o "$resp" = 'c' ]; then
 	cp -i ~/dotFiles/terminal/.zshrc ~/.zshrc  
 	#cp -i ~/dotFiles/terminal/.Xresources ~/.Xresources
 
-elif [ "$resp" = 'S' -o "$resp" = 's']; then
+elif [ "$resp" = 'S' -o "$resp" = 's' ]; then
 	
 	syncFile ~/.vimrc ~/dotFiles/terminal/.vimrc
 	syncFile ~/.bashrc ~/dotFiles/terminal/.bashrc
 	syncFile ~/.tmux.conf ~/dotFiles/terminal/.tmux.conf
 	syncFile ~/.zshrc ~/dotFiles/terminal/.zshrc
-	#syncFile ~/.Xresources ~/dotFiles/terminal/.Xresources 
+	syncFile ~/.Xresources ~/dotFiles/terminal/.Xresources 
 
 fi

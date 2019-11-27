@@ -168,6 +168,8 @@ alias cp="cp -i"                                                # Confirm before
 alias df='df -h'                                                # Human-readable sizes
 alias free='free -m'                                            # Show sizes in MB
 alias grep='grep --color=always'
+alias ll='ls -l'
+alias la='ls -la'
 
 case `uname -s` in
 	# OSX
