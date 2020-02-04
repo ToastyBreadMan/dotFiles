@@ -3,6 +3,9 @@
 ## Install i3
 Install the i3 package
 
+## Install Compton
+Install compton
+
 ## Fonts
 Install fonts because my rice need to look good  
 
