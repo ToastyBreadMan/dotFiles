@@ -1,15 +1,14 @@
+#!/bin/bash
 # Setup and install i3-gaps and other things quickly
 # Only for ubuntu like systems, for now
+
 echo "Installing i3"
 apt install i3 -y
 
 echo "----------------"
 echo "Installing i3-gaps dependencies"
-apt-get install -y git build-essential autoconf pkg-config
-apt-get install -y libxcb-shape0-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev xcb libxcb1-dev libxcb-icccm4-dev libyajl-dev libev-dev libxcb-xkb-dev libxcb-cursor-dev libxkbcommon-dev libxcb-xinerama0-dev libxkbcommon-x11-dev libstartup-notification0-dev libxcb-randr0-dev libxcb-xrm0 libxcb-xrm-dev
-
-
-
+apt install -y git build-essential autoconf pkg-config
+apt install -y libxcb-shape0-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev xcb libxcb1-dev libxcb-icccm4-dev libyajl-dev libev-dev libxcb-xkb-dev libxcb-cursor-dev libxkbcommon-dev libxcb-xinerama0-dev libxkbcommon-x11-dev libstartup-notification0-dev libxcb-randr0-dev libxcb-xrm0 libxcb-xrm-dev
 
 echo "----------------"
 echo "Installing i3-gaps"
@@ -30,5 +29,34 @@ make install
 echo "----------------"
 echo "Installing useful programs"
 
-apt-get install -y lxappearance nitrogen arc-theme rofi compton xfce4-terminal neofetch i3status ranger ffmpeg
+apt install -y lxappearance nitrogen arc-theme rofi compton xfce4-terminal neofetch i3status ranger ffmpeg rxvt-unicode scrot xclip htop
+apt install -y python3 python3-pip
 
+umask 133
+pip3 install ueberzug
+
+echo "----------------"
+echo "Installing fonts"
+cd /usr/share/fonts/opentype/
+
+umask 133
+
+curl -fLo "FontAwesome.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/FontAwesome.otf
+curl -fLo "Pomicons.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/Pomicons.otf
+curl -fLo "PowerlineExtraSymbols.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/PowerlineExtraSymbols.otf
+curl -fLo "PowerlineExtraSymbols.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/PowerlineExtraSymbols.otf
+curl -fLo "PowerlineSymbols.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/PowerlineSymbols.otf
+curl -fLo "Unicode_IEC_symbol_font.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/Unicode_IEC_symbol_font.otf
+curl -fLo "original-source.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/original-source.otf
+
+cd /usr/share/fonts/truetype/
+curl -fLo "devicons.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/devicons.ttf
+curl -fLo "font-awesome-extension.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/font-awesome-extension.ttf
+curl -fLo "font-logos.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/font-logos.ttf
+curl -fLo "materialdesignicons-webfont.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/materialdesignicons-webfont.ttf
+curl -fLo "octicons.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/octicons.ttf
+curl -fLo "weathericons-regular-webfont.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/src/glyphs/weathericons-regular-webfont.ttf
+curl -fLo "Anonymice Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/AnonymousPro/complete/Anonymice%20Nerd%20Font%20Complete%20Mono.ttf
+curl -fLo "Anonymice Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/AnonymousPro/complete/Anonymice%20Nerd%20Font%20Complete.ttf
+
+fc-cache -f -v

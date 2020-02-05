@@ -27,15 +27,16 @@ syncFile() {
 	ln -s $2 $1
 }
 
+PWD=$(pwd)
+
 printf "Do you want to copy or sync dotfiles? [C/S]"
 read resp
 
 if [ "$resp" = 'C' -o "$resp" = 'c' ]; then
 
-	cp -i ~/dotFiles/terminal/.vimrc ~/.vimrc
-	cp -i ~/dotFiles/terminal/.bashrc ~/.bashrc 
-	cp -i ~/dotFiles/terminal/.tmux.conf ~/.tmux.conf 
-	cp -i ~/dotFiles/terminal/.zshrc ~/.zshrc  
+	cp -i $PWD/.Xresources $HOME/.Xresources
+	cp -ri $PWD/.config $HOME/.config
+	cp -ri $PWD/.local $HOME/.local
 
 elif [ "$resp" = 'S' -o "$resp" = 's' ]; then
 	
@@ -43,5 +44,6 @@ elif [ "$resp" = 'S' -o "$resp" = 's' ]; then
 	syncFile ~/.bashrc ~/dotFiles/terminal/.bashrc
 	syncFile ~/.tmux.conf ~/dotFiles/terminal/.tmux.conf
 	syncFile ~/.zshrc ~/dotFiles/terminal/.zshrc
+	syncFile ~/.Xresources ~/dotFiles/terminal/.Xresources 
 
 fi
