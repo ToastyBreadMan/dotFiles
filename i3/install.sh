@@ -21,6 +21,10 @@ Header() {
 	printf "\n\n"
 }
 
+Header "Updating OS"
+apt update
+apt upgrade -y
+
 Header "Installing i3"
 apt install i3 -y
 
