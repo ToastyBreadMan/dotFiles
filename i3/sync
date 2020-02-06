@@ -16,14 +16,37 @@ syncFile() {
 			printf "\tDeleting $(tput setaf 3)$1$(tput sgr0)\n"
 			rm $1
 			printf "\tCreating symlink $1 -> $2\n\n"
-			ln -s $2 $1
+			ln -s $2 $File1
+			return
 		else
 			printf "\tSkipping\n\n"
 			return
 		fi
 	fi
 
-	printf "\tCreating symlink $1 -> $2\n\n"
+	if [ -d $1 ]; then
+		if [[ -L $1 ]]; then
+			printf "Directory $(tput setaf 3)$1$(tput sgr0) is already a link\n"
+			return  
+		fi
+		
+		printf "Directory $(tput setaf 3)$1$(tput sgr0) already exists.\n"
+		printf "Do you want to delete it and create the symlink $1 -> $2? [Y/N]"
+		read resp
+
+		if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
+			printf "\tDeleting $(tput setaf 3)$1$(tput sgr0)\n"
+			rm -r $1
+			printf "\tCreating symlink $1 -> $2\n\n"
+			ln -s $2 $1
+			return
+		else
+			printf "\tSkipping\n\n"
+			return
+		fi
+	fi
+
+	printf "Creating symlink $1 -> $2\n\n"
 	ln -s $2 $1
 }
 
@@ -35,15 +58,24 @@ read resp
 if [ "$resp" = 'C' -o "$resp" = 'c' ]; then
 
 	cp -i $PWD/.Xresources $HOME/.Xresources
-	cp -ri $PWD/.config $HOME/.config
-	cp -ri $PWD/.local $HOME/.local
+	cp -ri $PWD/.config/* $HOME/.config/
+	cp -ri $PWD/.local/* $HOME/.local/
 
 elif [ "$resp" = 'S' -o "$resp" = 's' ]; then
 	
-	syncFile ~/.vimrc ~/dotFiles/terminal/.vimrc
-	syncFile ~/.bashrc ~/dotFiles/terminal/.bashrc
-	syncFile ~/.tmux.conf ~/dotFiles/terminal/.tmux.conf
-	syncFile ~/.zshrc ~/dotFiles/terminal/.zshrc
-	syncFile ~/.Xresources ~/dotFiles/terminal/.Xresources 
+	syncFile $HOME/.Xresources $PWD/.Xresources
 
+	mkdir -p $HOME/.config
+	syncFile $HOME/.config/dunst $PWD/.config/dunst
+	syncFile $HOME/.config/compton.conf $PWD/.config/compton.conf
+	syncFile $HOME/.config/i3 $PWD/.config/i3
+	syncFile $HOME/.config/i3lock-blur $PWD/.config/i3lock-blur
+	syncFile $HOME/.config/i3-scrot.conf $PWD/.config/i3-scrot.conf
+	syncFile $HOME/.config/i3status $PWD/.config/i3status
+	syncFile $HOME/.config/ranger $PWD/.config/ranger
+	syncFile $HOME/.config/rofi $PWD/.config/rofi
+
+	mkdir -p $HOME/.local/bin
+	syncFile $HOME/.local/bin/i3exit $PWD/.local/bin/i3exit
+	syncFile $HOME/.local/bin/i3-scrot $PWD/.local/bin/i3-scrot
 fi

@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# Arg 1 is link to make, arg 2 is where to point to
+syncFile() {
+    if [ -f $1 ]; then
+        if [[ -L $1 ]]; then
+            printf "File $(tput setaf 3)$1$(tput sgr0) is already a link\n"
+            return
+        fi
+
+        printf "File $(tput setaf 3)$1$(tput sgr0) already exists.\n"
+        printf "Do you want to delete it and create the symlink $1 -> $2? [Y/N]"
+        read resp
+
+        if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
+            printf "\tDeleting $(tput setaf 3)$1$(tput sgr0)\n"
+            rm $1
+            printf "\tCreating symlink $1 -> $2\n\n"
+            ln -s $2 $File1
+            return
+        else
+            printf "\tSkipping\n\n"
+            return
+        fi
+    fi
+
+    if [ -d $1 ]; then
+        if [[ -L $1 ]]; then
+            printf "Directory $(tput setaf 3)$1$(tput sgr0) is already a link\n"
+            return
+        fi
+
+        printf "Directory $(tput setaf 3)$1$(tput sgr0) already exists.\n"
+        printf "Do you want to delete it and create the symlink $1 -> $2? [Y/N]"
+        read resp
+
+        if [ "$resp" = 'y' -o "$resp" = 'Y' ] ; then
+            printf "\tDeleting $(tput setaf 3)$1$(tput sgr0)\n"
+            rm -r $1
+            printf "\tCreating symlink $1 -> $2\n\n"
+            ln -s $2 $1
+            return
+        else
+            printf "\tSkipping\n\n"
+            return
+        fi
+    fi
+
+    printf "Creating symlink $1 -> $2\n\n"
+    ln -s $2 $1
+}
+
+PWD=$(pwd)
+
+printf "Do you want to copy or sync dotfiles? [C/S]"
+read resp
+
+if [ "$resp" = 'C' -o "$resp" = 'c' ]; then
+
+	cp -i $PWD/.vimrc $HOME/.vimrc
+	cp -i $PWD/.bashrc $HOME/.bashrc 
+	cp -i $PWD/.tmux.conf $HOME/.tmux.conf 
+	cp -i $PWD/.zshrc $HOME/.zshrc  
+
+elif [ "$resp" = 'S' -o "$resp" = 's' ]; then
+	
+	syncFile $HOME/.vimrc $PWD/.vimrc
+	syncFile $HOME/.bashrc $PWD/.bashrc
+	syncFile $HOME/.tmux.conf $PWD/.tmux.conf
+	syncFile $HOME/.zshrc $PWD/.zshrc
+
+fi

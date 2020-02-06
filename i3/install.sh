@@ -2,16 +2,33 @@
 # Setup and install i3-gaps and other things quickly
 # Only for ubuntu like systems, for now
 
-echo "Installing i3"
+Header() {
+	str="$*"
+	length=${#str}
+	length=$(($length + 4))
+
+	seperator=""
+
+	for i in $(seq 1 $length)
+	do
+		seperator+='-'
+	done
+
+	printf "\n\n"
+	printf "%s\n" $seperator
+	printf "| %s |\n" "$*"
+	printf "%s\n" $seperator
+	printf "\n\n"
+}
+
+Header "Installing i3"
 apt install i3 -y
 
-echo "----------------"
-echo "Installing i3-gaps dependencies"
+Header "Installing i3-gaps dependencies"
 apt install -y git build-essential autoconf pkg-config
 apt install -y libxcb-shape0-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev xcb libxcb1-dev libxcb-icccm4-dev libyajl-dev libev-dev libxcb-xkb-dev libxcb-cursor-dev libxkbcommon-dev libxcb-xinerama0-dev libxkbcommon-x11-dev libstartup-notification0-dev libxcb-randr0-dev libxcb-xrm0 libxcb-xrm-dev
 
-echo "----------------"
-echo "Installing i3-gaps"
+Header "Installing i3-gaps"
 mkdir -p /opt/i3install/gui/ && cd /opt/i3install/gui/
 git clone https://www.github.com/Airblader/i3 i3-gaps && cd i3-gaps
 
@@ -26,8 +43,7 @@ sleep .5
 make -j8
 make install
 
-echo "----------------"
-echo "Installing useful programs"
+Header "Installing useful programs"
 
 apt install -y lxappearance nitrogen arc-theme rofi compton xfce4-terminal neofetch i3status ranger ffmpeg rxvt-unicode scrot xclip htop
 apt install -y python3 python3-pip
@@ -35,8 +51,7 @@ apt install -y python3 python3-pip
 umask 133
 pip3 install ueberzug
 
-echo "----------------"
-echo "Installing fonts"
+Header "Installing fonts"
 cd /usr/share/fonts/opentype/
 
 umask 133
@@ -60,3 +75,6 @@ curl -fLo "Anonymice Nerd Font Complete Mono.ttf" https://github.com/ryanoasis/n
 curl -fLo "Anonymice Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/AnonymousPro/complete/Anonymice%20Nerd%20Font%20Complete.ttf
 
 fc-cache -f -v
+
+Header "Next Steps"
+echo "Run the sync script as the user you with to install configs to."

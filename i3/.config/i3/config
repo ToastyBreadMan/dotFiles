@@ -8,7 +8,7 @@ set $mod Mod4
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-new_window pixel 1
+new_window pixel 2
 new_float normal
 
 # Hide borders
@@ -16,7 +16,7 @@ hide_edge_borders none
 
 # change borders
 bindsym $mod+u border none
-bindsym $mod+y border pixel 1
+bindsym $mod+y border pixel 2
 bindsym $mod+n border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -346,7 +346,7 @@ bindsym $mod+m bar mode toggle
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
-  client.focused          $term_color5 $term_color5 $term_color0 #FDF6E3
+  client.focused          $term_color14 $term_color14 $term_color0 #FDF6E3
   client.focused_inactive $term_color8 $term_color8 $term_color7 #454948
   client.unfocused        $term_color8 $term_background $term_color7 #454948
   client.urgent           $term_color9 $term_color9 $term_color0 #268BD2
