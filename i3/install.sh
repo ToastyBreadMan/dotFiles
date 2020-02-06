@@ -45,7 +45,7 @@ make install
 
 Header "Installing useful programs"
 
-apt install -y lxappearance nitrogen arc-theme rofi compton xfce4-terminal neofetch i3status ranger ffmpeg rxvt-unicode scrot xclip htop
+apt install -y lxappearance nitrogen arc-theme rofi compton xfce4-terminal neofetch i3status ranger ffmpeg rxvt-unicode scrot xclip htop clipit
 apt install -y python3 python3-pip
 
 umask 133
