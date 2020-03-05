@@ -52,6 +52,7 @@ umask 077
 # Aliases
 alias ll='ls -l'
 alias la='ls -la'
+alias lg='ls -la | grep -i'
 alias cp='cp -i'
 alias pvim='vim -n -i NONE'
 alias promptswap='if $PROMPT_VERBOSE; then PROMPT_VERBOSE=false; else PROMPT_VERBOSE=true; fi'
@@ -67,8 +68,8 @@ if [ $machine == 'Linux' ]; then
 fi
 
 # Add home path
-export PATH=$PATH:$HOME/bin
-if [[ $TERM == xterm ]]; then TERM=xterm-256color; fi
+export PATH=$PATH:$HOME/bin:$HOME/.cargo/bin
+if [[ $TERM == xterm ]]; then TERM=screen-256color; fi
 
 # Prompt command
 __prompt_command() {
