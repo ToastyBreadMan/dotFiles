@@ -72,7 +72,7 @@ setopt prompt_subst
 # Maia prompt
 PROMPT="%B%{$fg[cyan]%}%(4~|%-1~/.../%2~|%~)%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b " # Print some system information when the shell is first started
 # Print a greeting message when shell is started
-echo $USER@$HOST  $(uname -srm) $(lsb_release -rcs)
+echo $USER@$HOST  $(uname -srm)
 ## Prompt on right side:
 #  - shows status of git when in git repository (code adapted from https://techanic.net/2012/12/30/my_git_prompt_for_zsh.html)
 #  - shows exit status of previous command (if previous command finished with an error)
@@ -151,22 +151,6 @@ export LESS_TERMCAP_us=$'\E[01;36m'
 export LESS=-r
 
 
-# Apply different settigns for different terminals
-case $(basename "$(cat "/proc/$PPID/comm")") in
-  login)
-		RPROMPT="%{$fg[red]%} %(?..[%?])" 
-
-		# Type name of desired desktop after x, xinitrc is configured for it
-		alias x='startx ~/.xinitrc'
-    ;;
-#  'tmux: server')
-#       RPROMPT='$(git_prompt_string)'
-#     ;;
-  *)
-        RPROMPT='$(git_prompt_string)'
-    ;;
-esac
-
 ## Alias section 
 alias cp="cp -i"                                                # Confirm before overwriting something
 alias df='df -h'                                                # Human-readable sizes
@@ -182,6 +166,23 @@ case `uname -s` in
 	;;
 	Linux*)
 		alias ls="ls --color=always"
+
+		# Apply different settigns for different terminals
+		case $(basename "$(cat "/proc/$PPID/comm")") in
+		  login)
+				RPROMPT="%{$fg[red]%} %(?..[%?])" 
+		
+				# Type name of desired desktop after x, xinitrc is configured for it
+				alias x='startx ~/.xinitrc'
+		    ;;
+		#  'tmux: server')
+		#       RPROMPT='$(git_prompt_string)'
+		#     ;;
+		  *)
+		        RPROMPT='$(git_prompt_string)'
+		    ;;
+		esac
+
 	;;
 	FreeBSD*)
 	;;
