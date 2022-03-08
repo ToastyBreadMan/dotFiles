@@ -30,6 +30,22 @@ SAVEHIST=500
 # Set editor
 export EDITOR=/usr/bin/vim										# Use vim because it's better
 export VISUAL=/usr/bin/vim										# Use vim because it's better
+
+# Set up extra paths if needed
+SOURCES=(
+	"$HOME/.cargo/bin"
+	"/usr/local/sbin"
+	"$HOME/bin"
+)
+
+for f in "${SOURCES[@]}"; do
+	if [ -d $f ]; then
+		export PATH=$PATH:$f
+	fi
+done
+
+unset SOURCES
+
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
 
 ## Keybindings section
@@ -70,7 +86,7 @@ setopt prompt_subst
 # Prompt (on left side) similar to default bash prompt, or redhat zsh prompt with colors
 #PROMPT="%(!.%{$fg[red]%}[%n@%m %1~]%{$reset_color%}# .%{$fg[green]%}[%n@%m %1~]%{$reset_color%}$ "
 # Maia prompt
-PROMPT="%B%{$fg[cyan]%}%(4~|%-1~/.../%2~|%~)%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b " # Print some system information when the shell is first started
+PROMPT="%{$fg[green]%}%m%{$reset_color%} | %B%{$fg[cyan]%}%(4~|%-1~/.../%2~|%~)%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b " # Print some system information when the shell is first started
 # Print a greeting message when shell is started
 echo $USER@$HOST  $(uname -srm)
 ## Prompt on right side:
@@ -150,7 +166,6 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 export LESS=-r
 
-
 ## Alias section 
 alias cp="cp -i"                                                # Confirm before overwriting something
 alias df='df -h'                                                # Human-readable sizes
@@ -158,11 +173,35 @@ alias free='free -m'                                            # Show sizes in 
 alias grep='grep --color=always'
 alias ll='ls -l'
 alias la='ls -la'
+alias pvim='vim -n -i NONE'
+alias ssh='ssh -F =(for f in ~/.ssh/config.d/*config; do cat $f; echo; done)'
+alias scp='scp -F =(for f in ~/.ssh/config.d/*config; do cat $f; echo; done)'
+
+# Print SSH config hosts entries in a /etc/hosts friendly output
+function lssh {
+	for ssh_host in `cat ~/.ssh/config.d/*config | egrep '^\s*Host\s+' | sed 's/^\s*Host \(\w*\)/\1/g'`; do
+		ssh_host_address=`ssh -G $ssh_host | grep "^hostname " | sed "s/^hostname \(.*\)/\1/"`
+		printf "%-60s\t%-s\n" $ssh_host_address $ssh_host
+	done
+}
+
+# Swap prompt to a smaller one with no hostname included
+CURRENT_PROMPT=0
+function pswap {
+	if (( CURRENT_PROMPT == 0 )); then 
+		PROMPT="%B%{$fg[cyan]%}%(4~|%-1~/.../%2~|%~)%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b "
+		CURRENT_PROMPT=1
+	else
+		CURRENT_PROMPT=0
+		PROMPT="%{$fg[green]%}%m%{$reset_color%} | %B%{$fg[cyan]%}%(4~|%-1~/.../%2~|%~)%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b "
+	fi
+}
 
 case `uname -s` in
 	# OSX
 	Darwin*)
 		alias ls="ls -G"
+		#RPROMPT='$(git_prompt_string)'
 	;;
 	Linux*)
 		alias ls="ls --color=always"
