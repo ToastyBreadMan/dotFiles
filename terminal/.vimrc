@@ -33,8 +33,14 @@ set splitright                              " Split right
 set showcmd                                 " Show last command
 set ruler                                   " Show ruler at bottom
 let s:hidden_all = 0
+set number
 
 set pastetoggle=<F2>
+
+set re=0
+
+command B bprevious
+command F bnext
 
 " |----------------|
 " | File Managment |
@@ -68,7 +74,7 @@ set undoreload=10000
 " | Plugin Install |
 " |----------------|
 
-" Run 'call Plug_Setup' to install plugins
+" Run 'call Plug_Install()' to install plugins
 
 function Plug_Install()
 
@@ -100,12 +106,28 @@ function Plug_Install()
 		execute "!git clone https://github.com/dracula/vim.git" . " " . plug_start . "dracula-theme"
 	endif
 
-	" |===========|
-	" | Syntastic |
-	" |===========|
+	" |==========|
+	" | NerdTree |
+	" |==========|
 
-	if ! isdirectory(expand(plug_start . "syntastic"))
-		execute "!git clone https://github.com/vim-syntastic/syntastic.git" . " " . plug_start . "syntastic"
+	if ! isdirectory(expand(plug_start . "nerdtree"))
+		execute "!git clone https://github.com/preservim/nerdtree.git" . " " . plug_start . "nerdtree"
+	endif
+
+	" |=============|
+	" | vim-airline |
+	" |=============|
+
+	if ! isdirectory(expand(plug_start . "vim-airline"))
+		execute "!git clone https://github.com/vim-airline/vim-airline.git" . " " . plug_start . "vim-airline"
+	endif
+	
+	" |==============|
+	" | Vim-Devicons |
+	" |==============|
+
+	if ! isdirectory(expand(plug_start . "vim-devicons"))
+		execute "!git clone https://github.com/ryanoasis/vim-devicons.git" . " " . plug_start . "vim-devicons"
 	endif
 
 endfunction
@@ -122,16 +144,37 @@ try
 catch
 endtry
 
-" Syntastic settings
+" NerdTree settings
 try
-	set statusline+=%#warningmsg#
-	set statusline+=%{SyntasticStatuslineFlag()}
-	set statusline+=%*
+	let NERDTreeShowHidden = 1
+	let g:NERDTreeDirArrows = 0
+catch
+endtry
 
-	let g:syntastic_always_populate_loc_list = 1
-	let g:syntastic_auto_loc_list = 1
-	let g:syntastic_check_on_open = 0
-	let g:syntastic_check_on_wq = 0
+try
+	let g:airline_powerline_fonts = 1
+	let g:airline_left_sep = ''
+	let g:airline_left_alt_sep = ''
+	let g:airline_right_sep = ''
+	let g:airline_right_alt_sep = ''
+	let g:airline_symbols.branch = ''
+	let g:airline_symbols.readonly = ''
+	let g:airline_theme='dracula'
+	let g:airline#extensions#tabline#enabled = 1
+	let g:airline#extensions#tabline#show_tab_nr = 1
+	let g:airline#extensions#tabline#show_buffers = 1
+	let g:airline#extensions#tabline#formatter = 'unique_tail'
+	let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
+	silent! call airline#extensions#whitespace#disable()
+catch
+endtry
+
+" Vim-Devicons settings
+try
+	let g:DevIconsEnableFoldersOpenClose = 1
+	let g:webdevicons_enable_nerdtree = 1
+	let g:webdevicons_conceal_nerdtree_brackets = 0
+	call webdevicons#refresh()
 catch
 endtry
 
@@ -365,3 +408,5 @@ augroup markdown
 augroup END
 
 autocmd BufReadPost * silent! normal! g`"zv
+
+

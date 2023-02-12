@@ -76,9 +76,14 @@ bindkey '^[[Z' undo                                             # Shift+tab undo
 
 
 # Theming section  
-autoload -U compinit colors
-compinit -d
+autoload -U colors
 colors
+
+# Completion section
+autoload bashcompinit && bashcompinit
+autoload -U compinit && compinit -d
+
+complete -C $(which aws_completer) aws
 
 # enable substitution for prompt
 setopt prompt_subst
@@ -188,7 +193,7 @@ function lssh {
 # Swap prompt to a smaller one with no hostname included
 CURRENT_PROMPT=0
 function pswap {
-	if (( CURRENT_PROMPT == 0 )); then 
+	if (( CURRENT_PROMPT == 0 )); then
 		PROMPT="%B%{$fg[cyan]%}%(4~|%-1~/.../%2~|%~)%u%b >%{$fg[cyan]%}>%B%(?.%{$fg[cyan]%}.%{$fg[red]%})>%{$reset_color%}%b "
 		CURRENT_PROMPT=1
 	else
@@ -201,6 +206,11 @@ case `uname -s` in
 	# OSX
 	Darwin*)
 		alias ls="ls -G"
+		if [[ -f "/opt/homebrew/bin/vim" ]]; then
+			alias vim="/opt/homebrew/bin/vim"
+		fi
+		export PATH="$PATH:/opt/homebrew/bin"
+
 		#RPROMPT='$(git_prompt_string)'
 	;;
 	Linux*)
@@ -208,18 +218,18 @@ case `uname -s` in
 
 		# Apply different settigns for different terminals
 		case $(basename "$(cat "/proc/$PPID/comm")") in
-		  login)
-				RPROMPT="%{$fg[red]%} %(?..[%?])" 
-		
+			login)
+				RPROMPT="%{$fg[red]%} %(?..[%?])"
+
 				# Type name of desired desktop after x, xinitrc is configured for it
 				alias x='startx ~/.xinitrc'
-		    ;;
+			;;
 		#  'tmux: server')
 		#       RPROMPT='$(git_prompt_string)'
 		#     ;;
-		  *)
-		        RPROMPT='$(git_prompt_string)'
-		    ;;
+			*)
+				RPROMPT='$(git_prompt_string)'
+			;;
 		esac
 
 	;;
