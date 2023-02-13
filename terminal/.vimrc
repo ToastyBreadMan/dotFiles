@@ -74,109 +74,55 @@ set undoreload=10000
 " | Plugin Install |
 " |----------------|
 
-" Run 'call Plug_Install()' to install plugins
-
-function Plug_Install()
-
-	" Plugin directories
-	let plug_dir=$HOME . "/.vim/pack/plugins/"
-	let plug_start=plug_dir . "start/"
-	let plug_opt=plug_dir . "opt/"
-
-	" Check if git is installed
-	if executable("git") == -1
-		echom "git is needed for plugins to be installed"
-		return
-	endif
-
-	" Set up directory structures
-	if ! isdirectory(expand(plug_start))
-		call mkdir(expand(plug_start), "p", 0755)
-	endif
-
-	if ! isdirectory(expand(plug_opt))
-		call mkdir(expand(plug_opt), "p", 0755)
-	endif
-
-	" |=========|
-	" | Dracula |
-	" |=========|
-
-	if ! isdirectory(expand(plug_start . "dracula-theme"))
-		execute "!git clone https://github.com/dracula/vim.git" . " " . plug_start . "dracula-theme"
-	endif
-
-	" |==========|
-	" | NerdTree |
-	" |==========|
-
-	if ! isdirectory(expand(plug_start . "nerdtree"))
-		execute "!git clone https://github.com/preservim/nerdtree.git" . " " . plug_start . "nerdtree"
-	endif
-
-	" |=============|
-	" | vim-airline |
-	" |=============|
-
-	if ! isdirectory(expand(plug_start . "vim-airline"))
-		execute "!git clone https://github.com/vim-airline/vim-airline.git" . " " . plug_start . "vim-airline"
-	endif
-	
-	" |==============|
-	" | Vim-Devicons |
-	" |==============|
-
-	if ! isdirectory(expand(plug_start . "vim-devicons"))
-		execute "!git clone https://github.com/ryanoasis/vim-devicons.git" . " " . plug_start . "vim-devicons"
-	endif
-
+function Plug_Setup()
+	let data_dir = '~/.vim'
+	if empty(glob(data_dir . '/autoload/plug.vim'))
+		silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	fi
 endfunction
 
-" Load all packages in the 'start' package directory
-" 'opt' packages must be loaded with 'packadd!'
-packloadall!
-
-" Dracula settings
 try
+	call plug#begin()
+
+	Plug 'dracula/vim', { 'as': 'dracula' }
+	Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+	Plug 'vim-airline/vim-airline'
+	Plug 'ryanoasis/vim-devicons'
+
+	call plug#end()
+	
+	" Dracula
 	let g:dracula_colorterm = 0
 	let g:dracula_italic = 0
 	colorscheme dracula
-catch
-endtry
-
-" NerdTree settings
-try
+	
+	" NerdTree
 	let NERDTreeShowHidden = 1
 	let g:NERDTreeDirArrows = 0
-catch
-endtry
 
-try
+	"vim-airline
 	let g:airline_powerline_fonts = 1
 	let g:airline_left_sep = ''
 	let g:airline_left_alt_sep = ''
 	let g:airline_right_sep = ''
 	let g:airline_right_alt_sep = ''
-	let g:airline_symbols.branch = ''
-	let g:airline_symbols.readonly = ''
 	let g:airline_theme='dracula'
+	let g:airline#extensions#whitespace#enabled = 0
 	let g:airline#extensions#tabline#enabled = 1
 	let g:airline#extensions#tabline#show_tab_nr = 1
 	let g:airline#extensions#tabline#show_buffers = 1
 	let g:airline#extensions#tabline#formatter = 'unique_tail'
 	let g:airline#extensions#tabline#switch_buffers_and_tabs = 1
-	silent! call airline#extensions#whitespace#disable()
-catch
-endtry
 
-" Vim-Devicons settings
-try
+	"vim-devicons
 	let g:DevIconsEnableFoldersOpenClose = 1
 	let g:webdevicons_enable_nerdtree = 1
-	let g:webdevicons_conceal_nerdtree_brackets = 0
-	call webdevicons#refresh()
+	let g:webdevicons_conceal_nerdtree_brackets = 1
+
 catch
-endtry
+	"NOP
+endtry	
 
 
 " |-----------|
@@ -405,8 +351,7 @@ augroup markdown
 	autocmd BufNewFile,BufRead *.md setlocal colorcolumn=80
 	autocmd BufNewFile,BufRead *.md setlocal spell
 	autocmd BufNewFile,BufRead *.md setlocal commentstring=<!--\ %s\ -->
+	autocmd BufNewFile,BufRead *.md setlocal textwidth=80
 augroup END
 
 autocmd BufReadPost * silent! normal! g`"zv
-
-
