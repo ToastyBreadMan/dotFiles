@@ -27,6 +27,8 @@ HISTFILE=~/.zhistory
 HISTSIZE=1000
 SAVEHIST=500
 
+export SHELL=$(which zsh)
+
 # Set editor
 export EDITOR=/usr/bin/vim										# Use vim because it's better
 export VISUAL=/usr/bin/vim										# Use vim because it's better
