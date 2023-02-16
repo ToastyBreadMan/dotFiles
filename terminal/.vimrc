@@ -74,12 +74,14 @@ set undoreload=10000
 " | Plugin Install |
 " |----------------|
 
+" Use ':Plug_Setup()' to install plugins
+
 function Plug_Setup()
 	let data_dir = '~/.vim'
 	if empty(glob(data_dir . '/autoload/plug.vim'))
 		silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-	fi
+	endif
 endfunction
 
 try
